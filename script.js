@@ -160,14 +160,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }, delay);
         };
 
-        [0, 60, 180, 360, 720].forEach(runAlignment);
+        [0, 80, 180].forEach(runAlignment);
         window.requestAnimationFrame(() => {
             window.requestAnimationFrame(() => {
                 alignSectionTarget({ behavior: 'auto' });
             });
         });
 
-        window.setTimeout(finalizeSectionAlignment, 900);
+        window.setTimeout(finalizeSectionAlignment, 260);
     };
 
     const navigationType = getNavigationType();
