@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
     const currentFile = currentPath.split('/').pop() || 'index.html';
     const pendingHashStorageKey = 'ataman_pending_hash';
+    const rootElement = document.documentElement;
 
     const isHomePage = () => {
         return currentPath.endsWith('/') || currentPath.endsWith('/index.html') || currentPath === '/';
@@ -52,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const setScrollBehavior = behavior => {
+        rootElement.style.scrollBehavior = behavior;
+    };
+
     const getPendingHash = () => window.sessionStorage.getItem(pendingHashStorageKey);
 
     const clearPendingHash = () => window.sessionStorage.removeItem(pendingHashStorageKey);
@@ -90,6 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        setScrollBehavior('auto');
+
         if (!window.location.hash && activeHash) {
             window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${activeHash}`);
         }
@@ -100,12 +107,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }, delay);
         };
 
-        [0, 120, 320, 700].forEach(runAlignment);
+        [0, 40, 120, 240].forEach(runAlignment);
         window.requestAnimationFrame(() => {
             window.requestAnimationFrame(() => {
                 alignHashTarget({ behavior: 'auto' });
             });
         });
+
+        window.setTimeout(() => {
+            setScrollBehavior('');
+        }, 320);
 
         clearPendingHash();
     };
@@ -169,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     window.addEventListener('hashchange', () => {
         window.requestAnimationFrame(() => {
+            setScrollBehavior('');
             scheduleHashAlignment({ smooth: true });
         });
     });
