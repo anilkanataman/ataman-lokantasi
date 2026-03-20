@@ -1430,6 +1430,85 @@ ul {
     margin-top: 2rem;
 }
 
+.info-page {
+    background: linear-gradient(180deg, #131313 0%, #191919 280px, var(--clr-cream) 280px, var(--clr-cream) 100%);
+}
+
+.info-hero {
+    padding: 9rem 0 4rem;
+    color: var(--clr-white);
+}
+
+.info-hero .section-subtitle {
+    color: var(--clr-gold);
+}
+
+.info-hero .section-subtitle::before {
+    background-color: var(--clr-gold);
+}
+
+.info-hero-title {
+    max-width: 720px;
+    margin-bottom: 1rem;
+}
+
+.info-hero-description {
+    max-width: 720px;
+    color: rgba(255,255,255,0.72);
+    font-size: 1.05rem;
+}
+
+.info-content-section {
+    padding: 0 0 6rem;
+}
+
+.info-card {
+    background-color: var(--clr-white);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.08);
+}
+
+.info-card + .info-card {
+    margin-top: 1.5rem;
+}
+
+.info-card h2 {
+    margin-bottom: 1rem;
+}
+
+.info-card h3 {
+    margin: 1.75rem 0 0.75rem;
+    color: var(--clr-dark);
+}
+
+.info-card p,
+.info-card li {
+    color: rgba(26,26,26,0.78);
+}
+
+.info-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-top: 1rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+}
+
+.info-card a {
+    color: var(--clr-amber);
+    font-weight: 600;
+}
+
+.info-note {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--clr-amber);
+    background-color: rgba(217,106,43,0.08);
+    color: rgba(26,26,26,0.76);
+}
+
 @media (max-width: 992px) {
     .story-split, .story-split.reverse {
         flex-direction: column;
@@ -1463,6 +1542,14 @@ ul {
 
     .story-image-vintage .story-image-media {
         object-position: center top;
+    }
+
+    .info-hero {
+        padding: 8rem 0 3rem;
+    }
+
+    .info-card {
+        padding: 2.25rem;
     }
 }
 
@@ -1599,6 +1686,25 @@ ul {
     }
     .story-video-placeholder {
         border-radius: 8px !important;
+    }
+    .info-page {
+        background: linear-gradient(180deg, #131313 0%, #191919 220px, var(--clr-cream) 220px, var(--clr-cream) 100%);
+    }
+    .info-hero {
+        padding: 7rem 0 2.25rem;
+    }
+    .info-hero-title {
+        font-size: 2.2rem;
+    }
+    .info-hero-description {
+        font-size: 0.98rem;
+    }
+    .info-content-section {
+        padding-bottom: 3rem;
+    }
+    .info-card {
+        padding: 1.5rem;
+        border-radius: 18px;
     }
 }
 
