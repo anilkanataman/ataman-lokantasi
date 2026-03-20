@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rootElement = document.documentElement;
     const currentUrl = new URL(window.location.href);
     const navbar = document.querySelector('.navbar');
+    let pendingSectionHandled = false;
 
     const isHomePage = () => {
         return currentPath.endsWith('/') || currentPath.endsWith('/index.html') || currentPath === '/';
@@ -109,6 +110,17 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.replaceState(null, '', cleanedUrl);
     };
 
+    const finalizeSectionAlignment = () => {
+        if (pendingSectionHandled) {
+            return;
+        }
+
+        pendingSectionHandled = true;
+        clearPendingSection();
+        clearSectionQuery();
+        setScrollBehavior('');
+    };
+
     const primeNavbarForSectionEntry = () => {
         if (!navbar || !isHomePage() || shouldForceHomeOnLoad || !getPendingSection()) {
             return;
@@ -132,21 +144,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }, delay);
         };
 
-        [0, 40, 120, 240].forEach(runAlignment);
+        [0, 60, 180, 360, 720].forEach(runAlignment);
         window.requestAnimationFrame(() => {
             window.requestAnimationFrame(() => {
                 alignSectionTarget({ behavior: 'auto' });
             });
         });
 
-        window.setTimeout(() => {
-            setScrollBehavior('');
-        }, 320);
-
-        clearPendingSection();
-        window.setTimeout(() => {
-            clearSectionQuery();
-        }, 350);
+        window.setTimeout(finalizeSectionAlignment, 900);
     };
 
     const navigationType = getNavigationType();
@@ -201,9 +206,15 @@ document.addEventListener('DOMContentLoaded', () => {
             resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
         });
         scheduleSectionAlignment();
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                scheduleSectionAlignment();
+            });
+        }
     });
     window.addEventListener('pageshow', event => {
-        if (event.persisted) {
+        if (!event.persisted) {
             return;
         }
 
