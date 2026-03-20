@@ -360,6 +360,13 @@ ul {
 }
 
 .hero .hero-trust-badge {
+    display: inline-flex;
+    gap: 0;
+}
+
+.hero .hero-trust-badge .trust-icon,
+.hero .hero-trust-badge .trust-dot,
+.hero .hero-trust-badge .trust-text:last-of-type {
     display: none;
 }
 
