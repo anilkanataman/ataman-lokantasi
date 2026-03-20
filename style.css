@@ -1649,6 +1649,12 @@ ul {
     .hero-title {
         font-size: 2.2rem;
     }
+    .about-text .section-title {
+        margin-bottom: 1.1rem;
+    }
+    .about-content {
+        margin-top: 0.35rem;
+    }
     .about-grid {
         gap: 2rem;
     }
