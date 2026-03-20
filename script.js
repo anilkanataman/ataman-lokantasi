@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sectionQueryParam = 'section';
     const rootElement = document.documentElement;
     const currentUrl = new URL(window.location.href);
+    const navbar = document.querySelector('.navbar');
 
     const isHomePage = () => {
         return currentPath.endsWith('/') || currentPath.endsWith('/index.html') || currentPath === '/';
@@ -108,6 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.replaceState(null, '', cleanedUrl);
     };
 
+    const primeNavbarForSectionEntry = () => {
+        if (!navbar || !isHomePage() || shouldForceHomeOnLoad || !getPendingSection()) {
+            return;
+        }
+
+        navbar.classList.add('scrolled');
+    };
+
     const scheduleSectionAlignment = ({ smooth = false } = {}) => {
         const activeSection = getPendingSection();
 
@@ -151,6 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('scrollRestoration' in window.history) {
         window.history.scrollRestoration = 'manual';
     }
+
+    primeNavbarForSectionEntry();
 
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', event => {
@@ -207,8 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* --- Navbar Scroll Effect --- */
-    const navbar = document.querySelector('.navbar');
-
     if (navbar) {
         const updateNavbarOnScroll = () => {
             if (window.scrollY > 50) {
