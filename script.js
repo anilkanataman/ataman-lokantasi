@@ -25,6 +25,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const getHashTarget = () => {
+        if (!isHomePage() || !window.location.hash) {
+            return null;
+        }
+
+        const targetId = decodeURIComponent(window.location.hash.slice(1));
+        return document.getElementById(targetId);
+    };
+
+    const alignHashTarget = ({ behavior = 'auto' } = {}) => {
+        const target = getHashTarget();
+
+        if (!target) {
+            return;
+        }
+
+        const targetStyles = window.getComputedStyle(target);
+        const scrollMarginTop = Number.parseFloat(targetStyles.scrollMarginTop) || 0;
+        const targetTop = window.scrollY + target.getBoundingClientRect().top - scrollMarginTop;
+
+        window.scrollTo({
+            top: Math.max(targetTop, 0),
+            behavior
+        });
+    };
+
+    const scheduleHashAlignment = () => {
+        if (shouldForceHomeOnLoad || !window.location.hash) {
+            return;
+        }
+
+        window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+                alignHashTarget();
+            });
+        });
+    };
+
     const navigationType = getNavigationType();
     const shouldForceHomeOnLoad = navigationType === 'reload';
 
@@ -43,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.requestAnimationFrame(() => {
             resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
         });
+        scheduleHashAlignment();
     });
     window.addEventListener('pageshow', event => {
         if (event.persisted) {
@@ -50,6 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
+        scheduleHashAlignment();
+    });
+    window.addEventListener('hashchange', () => {
+        window.requestAnimationFrame(() => {
+            alignHashTarget({ behavior: 'smooth' });
+        });
     });
 
     /* --- Navbar Scroll Effect --- */
