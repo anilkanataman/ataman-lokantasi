@@ -1,14 +1,72 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const currentPath = window.location.pathname;
+    const currentFile = currentPath.split('/').pop() || 'index.html';
+
+    const isHomePage = () => {
+        return currentPath.endsWith('/') || currentPath.endsWith('/index.html') || currentPath === '/';
+    };
+
+    const getNavigationType = () => {
+        const [navigationEntry] = window.performance.getEntriesByType('navigation');
+        return navigationEntry ? navigationEntry.type : 'navigate';
+    };
+
+    const resetScrollPosition = ({ forceHome = false } = {}) => {
+        if (!isHomePage()) {
+            return;
+        }
+
+        if (forceHome && window.location.hash) {
+            window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+        }
+
+        if (forceHome || !window.location.hash) {
+            window.scrollTo(0, 0);
+        }
+    };
+
+    const navigationType = getNavigationType();
+    const shouldForceHomeOnLoad = navigationType === 'reload';
+
+    if (currentFile === 'hikayemiz.html' && navigationType === 'reload') {
+        window.location.replace('index.html');
+        return;
+    }
+
+    if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+    }
+
+    resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
+    window.addEventListener('load', () => {
+        resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
+        window.requestAnimationFrame(() => {
+            resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
+        });
+    });
+    window.addEventListener('pageshow', event => {
+        if (event.persisted) {
+            return;
+        }
+
+        resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
+    });
+
     /* --- Navbar Scroll Effect --- */
     const navbar = document.querySelector('.navbar');
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+
+    if (navbar) {
+        const updateNavbarOnScroll = () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        };
+
+        updateNavbarOnScroll();
+        window.addEventListener('scroll', updateNavbarOnScroll);
+    }
 
     /* --- Mobile Navigation --- */
     const mobileBtn = document.querySelector('.mobile-menu-btn');
@@ -16,11 +74,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNav = document.querySelector('.mobile-nav');
     const mobileLinks = document.querySelectorAll('.mobile-nav a');
 
-    mobileBtn.addEventListener('click', () => { mobileNav.classList.add('open'); });
-    closeBtn.addEventListener('click',  () => { mobileNav.classList.remove('open'); });
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', () => { mobileNav.classList.remove('open'); });
-    });
+    const setMobileNavState = isOpen => {
+        if (!mobileBtn || !mobileNav) {
+            return;
+        }
+
+        mobileNav.classList.toggle('open', isOpen);
+        mobileNav.setAttribute('aria-hidden', String(!isOpen));
+        mobileBtn.setAttribute('aria-expanded', String(isOpen));
+    };
+
+    if (mobileBtn && closeBtn && mobileNav) {
+        mobileBtn.addEventListener('click', () => { setMobileNavState(true); });
+        closeBtn.addEventListener('click', () => { setMobileNavState(false); });
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => { setMobileNavState(false); });
+        });
+
+        window.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                setMobileNavState(false);
+            }
+        });
+    }
 
     /* --- Scroll Reveal Animations --- */
     const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
@@ -38,22 +114,55 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', revealOnScroll);
 
     /* --- Active Navigation Link Update --- */
-    const sections = document.querySelectorAll('section');
-    const navLinks  = document.querySelectorAll('.nav-links a');
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
 
-    window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-            if (scrollY >= section.offsetTop - 200) {
-                current = section.getAttribute('id');
+    if (sections.length && navLinks.length) {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const normalizePath = path => {
+            if (!path || path === '/') {
+                return 'index.html';
             }
-        });
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
-                link.classList.add('active');
+
+            return path.split('/').pop();
+        };
+
+        const getLinkTarget = link => {
+            const href = link.getAttribute('href');
+
+            if (!href || href === '#') {
+                return null;
             }
-        });
-    });
+
+            if (href.startsWith('#')) {
+                return { path: currentPage, hash: href.slice(1) };
+            }
+
+            const [path, hash] = href.split('#');
+            return { path: normalizePath(path), hash: hash || '' };
+        };
+
+        const updateActiveNav = () => {
+            let currentSectionId = sections[0].id;
+
+            sections.forEach(section => {
+                if (window.scrollY >= section.offsetTop - 200) {
+                    currentSectionId = section.id;
+                }
+            });
+
+            navLinks.forEach(link => {
+                const target = getLinkTarget(link);
+                const isActive = target &&
+                    target.path === currentPage &&
+                    target.hash === currentSectionId;
+
+                link.classList.toggle('active', Boolean(isActive));
+            });
+        };
+
+        updateActiveNav();
+        window.addEventListener('scroll', updateActiveNav);
+    }
 
 });

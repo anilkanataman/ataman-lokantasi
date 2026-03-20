@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Styles -->
@@ -29,17 +29,17 @@
                 <a href="galeri.html">Galeri</a>
                 <a href="#contact">İletişim</a>
             </nav>
-            <div class="mobile-menu-btn">
+            <button class="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menüyü aç">
                 <i class="fas fa-bars"></i>
-            </div>
+            </button>
         </div>
     </header>
 
     <!-- Mobile Nav -->
-    <div class="mobile-nav">
-        <div class="mobile-nav-close">
+    <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+        <button class="mobile-nav-close" type="button" aria-label="Menüyü kapat">
             <i class="fas fa-times"></i>
-        </div>
+        </button>
         <a href="#home">Ana Sayfa</a>
         <a href="hikayemiz.html">Hikayemiz</a>
         <a href="#menu">Lezzetlerimiz</a>
@@ -50,17 +50,17 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <!-- Cinemagraph Background -->
-        <div class="hero-bg" style="background-image: url('assets/images/hero_real.png');"></div>
+        <div class="hero-bg hero-bg-home"></div>
         <div class="hero-overlay"></div>
         
         <!-- Enhanced Floating Embers -->
-        <div class="floating-ember" style="left: 15%; top: 90%; animation-delay: 0.1s; width: 6px; height: 6px;"></div>
-        <div class="floating-ember" style="left: 25%; top: 85%; animation-delay: 1.5s; width: 4px; height: 4px;"></div>
-        <div class="floating-ember" style="left: 45%; top: 95%; animation-delay: 2.2s; width: 5px; height: 5px;"></div>
-        <div class="floating-ember" style="left: 60%; top: 80%; animation-delay: 0.8s; width: 7px; height: 7px;"></div>
-        <div class="floating-ember" style="left: 75%; top: 90%; animation-delay: 3.5s; width: 5px; height: 5px;"></div>
-        <div class="floating-ember" style="left: 85%; top: 85%; animation-delay: 1.2s; width: 8px; height: 8px;"></div>
-        <div class="floating-ember" style="left: 90%; top: 75%; animation-delay: 2.8s; width: 4px; height: 4px;"></div>
+        <div class="floating-ember ember-1"></div>
+        <div class="floating-ember ember-2"></div>
+        <div class="floating-ember ember-3"></div>
+        <div class="floating-ember ember-4"></div>
+        <div class="floating-ember ember-5"></div>
+        <div class="floating-ember ember-6"></div>
+        <div class="floating-ember ember-7"></div>
         
         <!-- Soft Smoke Effect -->
         <div class="smoke-layer smoke-1"></div>
@@ -107,7 +107,7 @@
                     <div class="about-content reveal-up delay-2">
                         <p>1950 yılında başlayan lezzet serüvenimiz, üç kuşaktır süregelen aile geleneğiyle ilk günkü özenini koruyor. Özel baharatlarımızla harmanlanan taze piliçlerimiz, usta ellerde geleneksel yöntemlerle ağır ağır pişirilerek sofralarınıza ulaşıyor.</p>
                         <p>Misafirlerimize her zaman dürüstlük, hijyen ve aile samimiyetiyle yaklaşmayı ilke edindik.</p>
-                        <p style="font-weight: 500; font-style: italic; color: var(--clr-amber); margin-top: 1rem;">Şehrin yarım asrı aşan en köklü lokantalarından biri olarak, değişmeyen kalitemiz ve eşsiz tadımızla sizleri ağırlamaktan gurur duyuyoruz.</p>
+                        <p class="about-highlight">Şehrin yarım asrı aşan en köklü lokantalarından biri olarak, değişmeyen kalitemiz ve eşsiz tadımızla sizleri ağırlamaktan gurur duyuyoruz.</p>
                     </div>
                     <div class="stats reveal-up delay-3">
                         <div class="stat-item">
@@ -154,74 +154,50 @@
             <div class="menu-grid">
                 <!-- Menu Item 1 -->
                 <div class="menu-card reveal-up">
-                    <div class="menu-card-inner">
-                        <div class="menu-info">
-                            <div class="menu-title-row">
-                                <h3>Bütün Piliç Çevirme</h3>
-                            </div>
-                            <p class="menu-desc">Özel Ataman baharatlarıyla marine edilip özenle dinlendirilmiş, dışı nar gibi çıtır, içi lokum gibi yumuşacık bütün piliç çevirme. (Lavaş ve spesiyal sos ile)</p>
-                        </div>
+                    <div class="menu-title-row">
+                        <h3>Bütün Piliç Çevirme</h3>
                     </div>
+                    <p class="menu-desc">Özel Ataman baharatlarıyla marine edilip özenle dinlendirilmiş, dışı nar gibi çıtır, içi lokum gibi yumuşacık bütün piliç çevirme. (Lavaş ve spesiyal sos ile)</p>
                 </div>
 
                 <!-- Menu Item 2 -->
                 <div class="menu-card reveal-up delay-1">
-                    <div class="menu-card-inner">
-                        <div class="menu-info">
-                            <div class="menu-title-row">
-                                <h3>Yarım Piliç Çevirme</h3>
-                            </div>
-                            <p class="menu-desc">Tek kişilik mükemmel porsiyon. Yanında leziz pilav, közlenmiş biber ve domates eşliğinde.</p>
-                        </div>
+                    <div class="menu-title-row">
+                        <h3>Yarım Piliç Çevirme</h3>
                     </div>
+                    <p class="menu-desc">Tek kişilik mükemmel porsiyon. Yanında leziz pilav, közlenmiş biber ve domates eşliğinde.</p>
                 </div>
 
                 <!-- Menu Item 3 -->
                 <div class="menu-card reveal-up delay-2">
-                    <div class="menu-card-inner">
-                        <div class="menu-info">
-                            <div class="menu-title-row">
-                                <h3>Tavuk Döner</h3>
-                            </div>
-                            <p class="menu-desc">Geleneksel ustalıkla yaprak yaprak kesilmiş, özel terbiyeli nefis tavuk döner.</p>
-                        </div>
+                    <div class="menu-title-row">
+                        <h3>Tavuk Döner</h3>
                     </div>
+                    <p class="menu-desc">Geleneksel ustalıkla yaprak yaprak kesilmiş, özel terbiyeli nefis tavuk döner.</p>
                 </div>
 
                 <!-- Menu Item 4 -->
                 <div class="menu-card reveal-up">
-                    <div class="menu-card-inner">
-                        <div class="menu-info">
-                            <div class="menu-title-row">
-                                <h3>Tavuk Suyu Çorbası</h3>
-                            </div>
-                            <p class="menu-desc">Geleneksel usulle saatlerce kaynatılmış, şifa kaynağı terbiyeli tavuk suyu çorbası.</p>
-                        </div>
+                    <div class="menu-title-row">
+                        <h3>Tavuk Suyu Çorbası</h3>
                     </div>
+                    <p class="menu-desc">Geleneksel usulle saatlerce kaynatılmış, şifa kaynağı terbiyeli tavuk suyu çorbası.</p>
                 </div>
                 
                 <!-- Menu Item 5 -->
                 <div class="menu-card reveal-up delay-1">
-                    <div class="menu-card-inner">
-                        <div class="menu-info">
-                            <div class="menu-title-row">
-                                <h3>Tereyağlı Pirinç Pilavı</h3>
-                            </div>
-                            <p class="menu-desc">Trabzon tereyağı ve saf tavuk suyu ile demlenmiş tane tane baldo pirinç pilavı.</p>
-                        </div>
+                    <div class="menu-title-row">
+                        <h3>Tereyağlı Pirinç Pilavı</h3>
                     </div>
+                    <p class="menu-desc">Trabzon tereyağı ve saf tavuk suyu ile demlenmiş tane tane baldo pirinç pilavı.</p>
                 </div>
 
                 <!-- Menu Item 6 -->
                 <div class="menu-card reveal-up delay-2">
-                    <div class="menu-card-inner">
-                        <div class="menu-info">
-                            <div class="menu-title-row">
-                                <h3>Mevsim Salata</h3>
-                            </div>
-                            <p class="menu-desc">Taptaze yeşillikler, sızma zeytinyağı ve el yapımı nar ekşisi sosuyla.</p>
-                        </div>
+                    <div class="menu-title-row">
+                        <h3>Mevsim Salata</h3>
                     </div>
+                    <p class="menu-desc">Taptaze yeşillikler, sızma zeytinyağı ve el yapımı nar ekşisi sosuyla.</p>
                 </div>
             </div>
             
@@ -252,7 +228,13 @@
                             <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div class="info-text">
                                 <h4>Adres</h4>
-                                <p>Mithatpaşa, Defterdar Sk. Ataman Apt No:7/A<br>67020 Zonguldak Merkez/Zonguldak</p>
+                                <p>
+                                    <a href="https://www.google.com/maps/search/?api=1&amp;query=Ataman+Lokantasi+Zonguldak" target="_blank" rel="noopener noreferrer">
+                                        Tarihi Ataman Lokantası
+                                    </a>
+                                    <br>
+                                    Mithatpaşa, Defterdar Sk. Ataman Apt No:7/A<br>67020 Zonguldak Merkez/Zonguldak
+                                </p>
                             </div>
                         </div>
                         <div class="info-item">
@@ -273,7 +255,16 @@
                 </div>
                 
                 <div class="map-wrapper reveal-right">
-                    <iframe src="https://maps.google.com/maps?q=Tarihi%20Ataman%20Lokantas%C4%B1,%20Zonguldak&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe
+                        src="https://www.google.com/maps?q=Ataman%20Lokantasi%20Zonguldak&amp;z=17&amp;output=embed"
+                        width="100%"
+                        height="100%"
+                        class="map-embed"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Ataman Lokantasi konumu">
+                    </iframe>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Styles -->
@@ -29,17 +29,17 @@
                 <a href="galeri.html" class="active">Galeri</a>
                 <a href="index.html#contact">İletişim</a>
             </nav>
-            <div class="mobile-menu-btn">
+            <button class="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menüyü aç">
                 <i class="fas fa-bars"></i>
-            </div>
+            </button>
         </div>
     </header>
 
     <!-- Mobile Nav -->
-    <div class="mobile-nav">
-        <div class="mobile-nav-close">
+    <div id="mobile-nav" class="mobile-nav" aria-hidden="true">
+        <button class="mobile-nav-close" type="button" aria-label="Menüyü kapat">
             <i class="fas fa-times"></i>
-        </div>
+        </button>
         <a href="index.html#home">Ana Sayfa</a>
         <a href="hikayemiz.html">Hikayemiz</a>
         <a href="index.html#menu">Lezzetlerimiz</a>
@@ -54,7 +54,7 @@
                 <span class="section-subtitle">Fotoğraflarla</span>
                 <h2 class="section-title">Ataman Lokantası Galerisi</h2>
                 <div class="divider"></div>
-                <p style="max-width: 600px; margin: 0 auto; color: #555;">75 yıllık serüvenimizden kareler. Lezzetimizin sırrı, ustalarımızın emeği ve sıcak ortamımızı yansıtan anlar.</p>
+                <p class="section-intro">75 yıllık serüvenimizden kareler. Lezzetimizin sırrı, ustalarımızın emeği ve sıcak ortamımızı yansıtan anlar.</p>
             </div>
 
             <div class="gallery-grid">
@@ -95,7 +95,7 @@
                 <div class="gallery-item reveal-up">
                     <div class="gallery-placeholder">
                         <i class="fa-solid fa-bowl-food"></i>
-                        <span>Çorba & Pilav</span>
+                        <span>Çorba &amp; Pilav</span>
                     </div>
                     <div class="gallery-overlay">
                         <i class="fas fa-search-plus"></i>
@@ -125,7 +125,7 @@
                 </div>
             </div>
             
-            <div class="text-center reveal-up" style="margin-top: 2rem; margin-bottom: 3rem;">
+            <div class="gallery-cta text-center reveal-up">
                 <a href="index.html#menu" class="btn btn-primary">
                     <span>Menüyü Tekrar İncele</span>
                     <i class="fas fa-arrow-right btn-icon"></i>
