@@ -1760,6 +1760,16 @@ ul {
     }
 }
 
+@media (max-width: 576px) and (orientation: portrait) {
+    .stats {
+        align-items: center;
+        text-align: center;
+    }
+    .stat-item {
+        align-items: center;
+    }
+}
+
 @media (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
     .navbar {
         padding: 0.8rem 0;
