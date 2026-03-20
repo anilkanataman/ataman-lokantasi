@@ -1567,7 +1567,12 @@ ul {
     }
     .hero {
         min-height: 100svh;
+        align-items: flex-start;
         padding: 5.5rem 0 3rem;
+    }
+    .hero-content {
+        width: 100%;
+        padding-top: 2rem;
     }
     .chicken-canvas {
         display: none;
@@ -1584,6 +1589,11 @@ ul {
     .hero-desc {
         font-size: 1rem;
         margin: 1rem 0 1.75rem;
+        max-width: none;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
     }
     .hero-buttons .btn {
         width: 100%;
