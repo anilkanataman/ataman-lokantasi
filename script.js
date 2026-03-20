@@ -90,6 +90,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     };
 
+    const getSectionTargetFromLink = link => {
+        const dataSection = link.dataset.section;
+
+        if (dataSection) {
+            return dataSection;
+        }
+
+        const targetIndexHash = getIndexHashFromHref(link.href);
+        return targetIndexHash ? targetIndexHash.sectionId : '';
+    };
+
     const persistPendingSection = sectionId => {
         if (sectionId) {
             window.sessionStorage.setItem(pendingSectionStorageKey, sectionId);
@@ -175,16 +186,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('a[href]').forEach(link => {
         link.addEventListener('click', event => {
+            const explicitSectionTarget = getSectionTargetFromLink(link);
+            const isSectionEntryLink = Boolean(explicitSectionTarget);
             const targetIndexHash = getIndexHashFromHref(link.href);
 
-            if (targetIndexHash) {
-                persistPendingSection(targetIndexHash.sectionId);
+            if (isSectionEntryLink) {
+                persistPendingSection(explicitSectionTarget);
 
                 if (!isHomePage()) {
                     event.preventDefault();
-                    const nextUrl = new URL(targetIndexHash.path, window.location.href);
-                    nextUrl.searchParams.set(sectionQueryParam, targetIndexHash.sectionId);
-                    window.location.assign(`${nextUrl.pathname}${nextUrl.search}`);
+                    window.location.assign('index.html');
                     return;
                 }
             } else {
