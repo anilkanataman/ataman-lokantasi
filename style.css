@@ -313,6 +313,7 @@ ul {
     background-repeat: no-repeat;
     z-index: 0;
     animation: kenBurns 25s ease-in-out infinite alternate;
+    will-change: transform;
 }
 
 .hero-bg-home {
@@ -379,7 +380,8 @@ ul {
 
 .hero-entrance {
     opacity: 1;
-    animation: heroEntrance 0.55s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+    transform: none;
+    animation: none;
 }
 
 .delay-badge { animation-delay: 0.05s; }
