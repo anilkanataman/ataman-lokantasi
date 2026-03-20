@@ -500,6 +500,10 @@ ul {
     align-items: center;
 }
 
+.about-text .section-title {
+    margin-bottom: 1.4rem;
+}
+
 .about-content {
     margin-bottom: 2.5rem;
 }
