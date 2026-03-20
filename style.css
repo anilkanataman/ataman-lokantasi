@@ -313,7 +313,6 @@ ul {
     background-repeat: no-repeat;
     z-index: 0;
     animation: kenBurns 25s ease-in-out infinite alternate;
-    will-change: transform;
 }
 
 .hero-bg-home {
@@ -379,16 +378,15 @@ ul {
 }
 
 .hero-entrance {
-    opacity: 1;
-    transform: none;
-    animation: none;
+    opacity: 0;
+    animation: heroEntrance 0.9s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }
 
-.delay-badge { animation-delay: 0.05s; }
-.hero-entrance.delay-1 { animation-delay: 0.1s; }
-.hero-entrance.delay-2 { animation-delay: 0.16s; }
-.hero-entrance.delay-3 { animation-delay: 0.22s; }
-.hero-entrance.delay-4 { animation-delay: 0.28s; }
+.delay-badge { animation-delay: 0.2s; }
+.hero-entrance.delay-1 { animation-delay: 0.5s; }
+.hero-entrance.delay-2 { animation-delay: 0.7s; }
+.hero-entrance.delay-3 { animation-delay: 0.9s; }
+.hero-entrance.delay-4 { animation-delay: 1.1s; }
 
 /* Hero Title Accent */
 .hero-title-accent {
