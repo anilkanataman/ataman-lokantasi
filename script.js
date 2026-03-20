@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
     const currentFile = currentPath.split('/').pop() || 'index.html';
-    const pendingHashStorageKey = 'ataman_pending_hash';
+    const pendingSectionStorageKey = 'ataman_pending_section';
+    const sectionQueryParam = 'section';
     const rootElement = document.documentElement;
+    const currentUrl = new URL(window.location.href);
 
     const isHomePage = () => {
         return currentPath.endsWith('/') || currentPath.endsWith('/index.html') || currentPath === '/';
@@ -27,17 +29,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const getHashTarget = () => {
-        if (!isHomePage() || !window.location.hash) {
+    const getPendingSection = () => {
+        return currentUrl.searchParams.get(sectionQueryParam) ||
+            window.sessionStorage.getItem(pendingSectionStorageKey) ||
+            (window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : '');
+    };
+
+    const clearPendingSection = () => {
+        window.sessionStorage.removeItem(pendingSectionStorageKey);
+    };
+
+    const getSectionTarget = () => {
+        const pendingSection = getPendingSection();
+
+        if (!isHomePage() || !pendingSection) {
             return null;
         }
 
-        const targetId = decodeURIComponent(window.location.hash.slice(1));
-        return document.getElementById(targetId);
+        return document.getElementById(pendingSection);
     };
 
-    const alignHashTarget = ({ behavior = 'auto' } = {}) => {
-        const target = getHashTarget();
+    const alignSectionTarget = ({ behavior = 'auto' } = {}) => {
+        const target = getSectionTarget();
 
         if (!target) {
             return;
@@ -57,10 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         rootElement.style.scrollBehavior = behavior;
     };
 
-    const getPendingHash = () => window.sessionStorage.getItem(pendingHashStorageKey);
-
-    const clearPendingHash = () => window.sessionStorage.removeItem(pendingHashStorageKey);
-
     const getIndexHashFromHref = href => {
         try {
             const url = new URL(href, window.location.href);
@@ -69,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetFile === 'index.html' && url.hash) {
                 return {
                     path: `${url.pathname}${url.search}`,
-                    hash: url.hash
+                    sectionId: decodeURIComponent(url.hash.slice(1))
                 };
             }
         } catch (_error) {
@@ -79,38 +88,45 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     };
 
-    const persistPendingHash = hash => {
-        if (hash) {
-            window.sessionStorage.setItem(pendingHashStorageKey, hash);
+    const persistPendingSection = sectionId => {
+        if (sectionId) {
+            window.sessionStorage.setItem(pendingSectionStorageKey, sectionId);
             return;
         }
 
-        clearPendingHash();
+        clearPendingSection();
     };
 
-    const scheduleHashAlignment = ({ smooth = false } = {}) => {
-        const activeHash = window.location.hash || getPendingHash();
+    const clearSectionQuery = () => {
+        if (!currentUrl.searchParams.has(sectionQueryParam)) {
+            return;
+        }
 
-        if (shouldForceHomeOnLoad || !activeHash) {
+        currentUrl.searchParams.delete(sectionQueryParam);
+        const cleanedSearch = currentUrl.searchParams.toString();
+        const cleanedUrl = `${currentUrl.pathname}${cleanedSearch ? `?${cleanedSearch}` : ''}${window.location.hash}`;
+        window.history.replaceState(null, '', cleanedUrl);
+    };
+
+    const scheduleSectionAlignment = ({ smooth = false } = {}) => {
+        const activeSection = getPendingSection();
+
+        if (shouldForceHomeOnLoad || !activeSection) {
             return;
         }
 
         setScrollBehavior('auto');
 
-        if (!window.location.hash && activeHash) {
-            window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${activeHash}`);
-        }
-
         const runAlignment = delay => {
             window.setTimeout(() => {
-                alignHashTarget({ behavior: smooth && delay === 0 ? 'smooth' : 'auto' });
+                alignSectionTarget({ behavior: smooth && delay === 0 ? 'smooth' : 'auto' });
             }, delay);
         };
 
         [0, 40, 120, 240].forEach(runAlignment);
         window.requestAnimationFrame(() => {
             window.requestAnimationFrame(() => {
-                alignHashTarget({ behavior: 'auto' });
+                alignSectionTarget({ behavior: 'auto' });
             });
         });
 
@@ -118,7 +134,10 @@ document.addEventListener('DOMContentLoaded', () => {
             setScrollBehavior('');
         }, 320);
 
-        clearPendingHash();
+        clearPendingSection();
+        window.setTimeout(() => {
+            clearSectionQuery();
+        }, 350);
     };
 
     const navigationType = getNavigationType();
@@ -138,15 +157,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetIndexHash = getIndexHashFromHref(link.href);
 
             if (targetIndexHash) {
-                persistPendingHash(targetIndexHash.hash);
+                persistPendingSection(targetIndexHash.sectionId);
 
                 if (!isHomePage()) {
                     event.preventDefault();
-                    window.location.assign(targetIndexHash.path);
+                    const nextUrl = new URL(targetIndexHash.path, window.location.href);
+                    nextUrl.searchParams.set(sectionQueryParam, targetIndexHash.sectionId);
+                    window.location.assign(`${nextUrl.pathname}${nextUrl.search}`);
                     return;
                 }
             } else {
-                clearPendingHash();
+                clearPendingSection();
             }
 
             if (!targetIndexHash) {
@@ -156,8 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const isSamePageHashLink = link.getAttribute('href').startsWith('#');
             if (!isSamePageHashLink && isHomePage()) {
                 event.preventDefault();
-                window.history.pushState(null, '', `${window.location.pathname}${window.location.search}${targetIndexHash.hash}`);
-                scheduleHashAlignment({ smooth: true });
+                window.history.pushState(null, '', `${window.location.pathname}${window.location.search}#${targetIndexHash.sectionId}`);
+                scheduleSectionAlignment({ smooth: true });
             }
         });
     });
@@ -168,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.requestAnimationFrame(() => {
             resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
         });
-        scheduleHashAlignment();
+        scheduleSectionAlignment();
     });
     window.addEventListener('pageshow', event => {
         if (event.persisted) {
@@ -176,12 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
-        scheduleHashAlignment();
+        scheduleSectionAlignment();
     });
     window.addEventListener('hashchange', () => {
         window.requestAnimationFrame(() => {
             setScrollBehavior('');
-            scheduleHashAlignment({ smooth: true });
+            scheduleSectionAlignment({ smooth: true });
         });
     });
 
