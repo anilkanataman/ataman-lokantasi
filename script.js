@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
     const currentFile = currentPath.split('/').pop() || 'index.html';
+    const pendingHashStorageKey = 'ataman_pending_hash';
 
     const isHomePage = () => {
         return currentPath.endsWith('/') || currentPath.endsWith('/index.html') || currentPath === '/';
@@ -51,16 +52,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const scheduleHashAlignment = () => {
-        if (shouldForceHomeOnLoad || !window.location.hash) {
+    const getPendingHash = () => {
+        return window.sessionStorage.getItem(pendingHashStorageKey);
+    };
+
+    const clearPendingHash = () => {
+        window.sessionStorage.removeItem(pendingHashStorageKey);
+    };
+
+    const persistPendingHash = href => {
+        try {
+            const url = new URL(href, window.location.href);
+            const targetFile = url.pathname.split('/').pop() || 'index.html';
+
+            if (targetFile === 'index.html' && url.hash) {
+                window.sessionStorage.setItem(pendingHashStorageKey, url.hash);
+            } else {
+                clearPendingHash();
+            }
+        } catch (_error) {
+            clearPendingHash();
+        }
+    };
+
+    const scheduleHashAlignment = ({ smooth = false } = {}) => {
+        const activeHash = window.location.hash || getPendingHash();
+
+        if (shouldForceHomeOnLoad || !activeHash) {
             return;
         }
 
+        if (!window.location.hash && activeHash) {
+            window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${activeHash}`);
+        }
+
+        const runAlignment = delay => {
+            window.setTimeout(() => {
+                alignHashTarget({ behavior: smooth && delay === 0 ? 'smooth' : 'auto' });
+            }, delay);
+        };
+
+        [0, 120, 320, 700].forEach(runAlignment);
         window.requestAnimationFrame(() => {
             window.requestAnimationFrame(() => {
-                alignHashTarget();
+                alignHashTarget({ behavior: 'auto' });
             });
         });
+
+        clearPendingHash();
     };
 
     const navigationType = getNavigationType();
@@ -74,6 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('scrollRestoration' in window.history) {
         window.history.scrollRestoration = 'manual';
     }
+
+    document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', () => {
+            persistPendingHash(link.href);
+        });
+    });
 
     resetScrollPosition({ forceHome: shouldForceHomeOnLoad });
     window.addEventListener('load', () => {
@@ -93,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     window.addEventListener('hashchange', () => {
         window.requestAnimationFrame(() => {
-            alignHashTarget({ behavior: 'smooth' });
+            scheduleHashAlignment({ smooth: true });
         });
     });
 
