@@ -359,6 +359,10 @@ ul {
     max-width: 100%;
 }
 
+.hero .hero-trust-badge {
+    display: none;
+}
+
 .trust-icon {
     font-size: 1rem;
 }
