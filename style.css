@@ -774,6 +774,16 @@ ul {
     gap: 1.5rem;
 }
 
+.info-item-clickable {
+    cursor: pointer;
+}
+
+.info-item-clickable:focus-visible {
+    outline: 2px solid var(--clr-amber);
+    outline-offset: 6px;
+    border-radius: 10px;
+}
+
 .info-icon {
     width: 50px;
     height: 50px;
@@ -785,6 +795,12 @@ ul {
     color: var(--clr-amber);
     font-size: 1.2rem;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.info-item-clickable:hover .info-icon,
+.info-item-clickable:focus-visible .info-icon {
+    background-color: var(--clr-amber);
+    color: var(--clr-white);
 }
 
 .info-text h4 {

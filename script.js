@@ -265,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileLinks = document.querySelectorAll('.mobile-nav a');
     const mapEmbed = document.querySelector('.map-embed');
     const mapWrapper = document.querySelector('.map-wrapper.reveal-right');
+    const contactMapLink = document.querySelector('#contact a[href*="google.com/maps"]');
+    const contactAddressItem = contactMapLink ? contactMapLink.closest('.info-item') : null;
 
     if (mapEmbed) {
         mapEmbed.setAttribute('loading', 'eager');
@@ -272,6 +274,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (mapWrapper) {
         mapWrapper.classList.add('active');
+    }
+
+    if (contactMapLink && contactAddressItem) {
+        contactMapLink.setAttribute('target', '_self');
+
+        const openContactMap = () => {
+            window.location.assign(contactMapLink.href);
+        };
+
+        contactAddressItem.classList.add('info-item-clickable');
+        contactAddressItem.setAttribute('role', 'link');
+        contactAddressItem.setAttribute('tabindex', '0');
+        contactAddressItem.setAttribute('aria-label', 'Tarihi Ataman Lokantasi konumunu Google Haritalar\'da ac');
+
+        contactAddressItem.addEventListener('click', event => {
+            if (event.target.closest('a')) {
+                return;
+            }
+
+            openContactMap();
+        });
+
+        contactAddressItem.addEventListener('keydown', event => {
+            if (event.key !== 'Enter' && event.key !== ' ') {
+                return;
+            }
+
+            event.preventDefault();
+            openContactMap();
+        });
     }
 
     const setMobileNavState = isOpen => {
