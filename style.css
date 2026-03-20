@@ -361,13 +361,22 @@ ul {
 
 .hero .hero-trust-badge {
     display: inline-flex;
-    gap: 0;
+    gap: 0.45rem;
 }
 
 .hero .hero-trust-badge .trust-icon,
 .hero .hero-trust-badge .trust-dot,
 .hero .hero-trust-badge .trust-text:last-of-type {
     display: none;
+}
+
+.hero .hero-trust-badge::before {
+    content: '✦';
+    color: var(--clr-gold);
+    font-size: 0.72rem;
+    line-height: 1;
+    opacity: 0.95;
+    transform: translateY(-1px);
 }
 
 .trust-icon {
