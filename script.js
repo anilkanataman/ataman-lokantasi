@@ -52,27 +52,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const getPendingHash = () => {
-        return window.sessionStorage.getItem(pendingHashStorageKey);
-    };
+    const getPendingHash = () => window.sessionStorage.getItem(pendingHashStorageKey);
 
-    const clearPendingHash = () => {
-        window.sessionStorage.removeItem(pendingHashStorageKey);
-    };
+    const clearPendingHash = () => window.sessionStorage.removeItem(pendingHashStorageKey);
 
-    const persistPendingHash = href => {
+    const getIndexHashFromHref = href => {
         try {
             const url = new URL(href, window.location.href);
             const targetFile = url.pathname.split('/').pop() || 'index.html';
 
             if (targetFile === 'index.html' && url.hash) {
-                window.sessionStorage.setItem(pendingHashStorageKey, url.hash);
-            } else {
-                clearPendingHash();
+                return {
+                    path: `${url.pathname}${url.search}`,
+                    hash: url.hash
+                };
             }
         } catch (_error) {
-            clearPendingHash();
+            return null;
         }
+
+        return null;
+    };
+
+    const persistPendingHash = hash => {
+        if (hash) {
+            window.sessionStorage.setItem(pendingHashStorageKey, hash);
+            return;
+        }
+
+        clearPendingHash();
     };
 
     const scheduleHashAlignment = ({ smooth = false } = {}) => {
@@ -115,8 +123,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.querySelectorAll('a[href]').forEach(link => {
-        link.addEventListener('click', () => {
-            persistPendingHash(link.href);
+        link.addEventListener('click', event => {
+            const targetIndexHash = getIndexHashFromHref(link.href);
+
+            if (targetIndexHash) {
+                persistPendingHash(targetIndexHash.hash);
+
+                if (!isHomePage()) {
+                    event.preventDefault();
+                    window.location.assign(targetIndexHash.path);
+                    return;
+                }
+            } else {
+                clearPendingHash();
+            }
+
+            if (!targetIndexHash) {
+                return;
+            }
+
+            const isSamePageHashLink = link.getAttribute('href').startsWith('#');
+            if (!isSamePageHashLink && isHomePage()) {
+                event.preventDefault();
+                window.history.pushState(null, '', `${window.location.pathname}${window.location.search}${targetIndexHash.hash}`);
+                scheduleHashAlignment({ smooth: true });
+            }
         });
     });
 
