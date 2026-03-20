@@ -812,6 +812,13 @@ ul {
     min-height: 400px;
 }
 
+.map-wrapper.reveal-right,
+.map-wrapper.reveal-right.active {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
 .map-wrapper iframe {
     display: block;
     width: 100%;

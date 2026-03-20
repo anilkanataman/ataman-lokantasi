@@ -263,6 +263,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn  = document.querySelector('.mobile-nav-close');
     const mobileNav = document.querySelector('.mobile-nav');
     const mobileLinks = document.querySelectorAll('.mobile-nav a');
+    const mapEmbed = document.querySelector('.map-embed');
+    const mapWrapper = document.querySelector('.map-wrapper.reveal-right');
+
+    if (mapEmbed) {
+        mapEmbed.setAttribute('loading', 'eager');
+    }
+
+    if (mapWrapper) {
+        mapWrapper.classList.add('active');
+    }
 
     const setMobileNavState = isOpen => {
         if (!mobileBtn || !mobileNav) {
