@@ -325,7 +325,9 @@ ul {
     letter-spacing: 0.5px;
     color: rgba(255,255,255,0.9);
     white-space: nowrap;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    max-width: 100%;
 }
 
 .trust-icon {
@@ -1328,6 +1330,17 @@ ul {
 }
 
 @media (max-width: 576px) {
+    .hero-trust-badge {
+        font-size: 0.72rem;
+        padding: 0.4rem 0.8rem;
+        gap: 0.3rem;
+    }
+    .trust-dot {
+        display: none;
+    }
+    .chicken-canvas {
+        display: none;
+    }
     .story-section {
         padding: 2.5rem 0;
     }
