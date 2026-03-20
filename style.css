@@ -168,6 +168,10 @@ ul {
     background: transparent;
 }
 
+.navbar.section-entry-nav {
+    transition: none;
+}
+
 .navbar.scrolled, .navbar.navbar-solid {
     background-color: rgba(26, 26, 26, 0.95);
     padding: 1rem 0;

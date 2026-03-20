@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rootElement = document.documentElement;
     const currentUrl = new URL(window.location.href);
     const navbar = document.querySelector('.navbar');
+    const sectionEntryNavbarClass = 'section-entry-nav';
     let pendingSectionHandled = false;
 
     const isHomePage = () => {
@@ -58,9 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const targetStyles = window.getComputedStyle(target);
-        const scrollMarginTop = Number.parseFloat(targetStyles.scrollMarginTop) || 0;
-        const targetTop = window.scrollY + target.getBoundingClientRect().top - scrollMarginTop;
+        const navbarOffset = navbar ? Math.max(Math.round(navbar.getBoundingClientRect().height) - 2, 0) : 0;
+        const targetTop = window.scrollY + target.getBoundingClientRect().top - navbarOffset;
 
         window.scrollTo({
             top: Math.max(targetTop, 0),
@@ -119,6 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
         clearPendingSection();
         clearSectionQuery();
         setScrollBehavior('');
+
+        if (navbar) {
+            navbar.classList.remove(sectionEntryNavbarClass);
+        }
     };
 
     const primeNavbarForSectionEntry = () => {
@@ -126,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        navbar.classList.add(sectionEntryNavbarClass);
         navbar.classList.add('scrolled');
     };
 
