@@ -173,11 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const navigationType = getNavigationType();
     const shouldForceHomeOnLoad = navigationType === 'reload';
 
-    if (currentFile === 'hikayemiz.html' && navigationType === 'reload') {
-        window.location.replace('index.html');
-        return;
-    }
-
     if ('scrollRestoration' in window.history) {
         window.history.scrollRestoration = 'manual';
     }

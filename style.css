@@ -324,19 +324,6 @@ ul {
     100% { transform: scale(1.15) translate(-1%, -1%); }
 }
 
-/* Piliç Çevirme Canvas */
-.chicken-canvas {
-    position: absolute;
-    right: 3%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: clamp(300px, 36vw, 560px);
-    height: clamp(300px, 36vw, 560px);
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0.92;
-}
-
 /* Trust Badge */
 .hero-trust-badge {
     display: inline-flex;
@@ -359,17 +346,6 @@ ul {
     max-width: 100%;
 }
 
-.hero .hero-trust-badge {
-    display: inline-flex;
-    gap: 0.45rem;
-}
-
-.hero .hero-trust-badge .trust-icon,
-.hero .hero-trust-badge .trust-dot,
-.hero .hero-trust-badge .trust-text:last-of-type {
-    display: none;
-}
-
 .hero .hero-trust-badge::before {
     content: '✦';
     color: var(--clr-gold);
@@ -377,18 +353,6 @@ ul {
     line-height: 1;
     opacity: 0.95;
     transform: translateY(-1px);
-}
-
-.trust-icon {
-    font-size: 1rem;
-}
-
-.trust-dot {
-    width: 4px;
-    height: 4px;
-    background: var(--clr-gold);
-    border-radius: 50%;
-    opacity: 0.7;
 }
 
 /* Hero Entrance Animation */
@@ -1565,25 +1529,6 @@ ul {
     border-left: 3px solid var(--clr-amber);
     background-color: rgba(217,106,43,0.08);
     color: rgba(26,26,26,0.76);
-}
-
-.page-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 2rem;
-}
-
-.page-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.7rem 1rem;
-    border-radius: 999px;
-    border: 1px solid rgba(197, 160, 89, 0.32);
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.78);
-    font-size: 0.9rem;
 }
 
 .menu-page-section {
