@@ -385,9 +385,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             navLinks.forEach(link => {
                 const target = getLinkTarget(link);
-                const isActive = target &&
+                const isHomeLink = target &&
                     target.path === currentPage &&
-                    target.hash === currentSectionId;
+                    target.hash === 'home';
+                const isActive = Boolean(
+                    isHomeLink ||
+                    (target &&
+                        target.path === currentPage &&
+                        target.hash === currentSectionId)
+                );
 
                 link.classList.toggle('active', Boolean(isActive));
             });

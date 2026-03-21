@@ -5,35 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ataman Lokantası | 1950'den Beri</title>
     <meta name="description" content="1950 yılından bu yana aile geleneğiyle hizmet veren Ataman Piliç Çevirme. Üç kuşaktır aynı özenle değişmeyen lezzet.">
-    <link rel="icon" type="image/png" href="assets/images/ataman_restoran.png">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Ataman Lokantası | 1950'den Beri">
-    <meta property="og:description" content="Zonguldak'ın köklü lezzeti Ataman Lokantası'nın hikayesini, menüsünü ve iletişim bilgilerini keşfedin.">
-    <meta property="og:image" content="assets/images/ataman_restoran.png">
-    <meta property="og:locale" content="tr_TR">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ataman Lokantası | 1950'den Beri">
-    <meta name="twitter:description" content="Zonguldak'ın köklü lezzeti Ataman Lokantası'nın hikayesini, menüsünü ve iletişim bilgilerini keşfedin.">
-    <meta name="twitter:image" content="assets/images/ataman_restoran.png">
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Restaurant",
-            "name": "Ataman Lokantası",
-            "image": "assets/images/ataman_restoran.png",
-            "telephone": "+90 372 251 24 91",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "Mithatpaşa Mah. Defterdar Sk. Ataman Apt. No:7/A",
-                "addressLocality": "Zonguldak Merkez",
-                "addressRegion": "Zonguldak",
-                "postalCode": "67020",
-                "addressCountry": "TR"
-            },
-            "servesCuisine": "Turkish",
-            "url": "https://ataman-lokantasi.vercel.app/"
-        }
-    </script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,9 +25,9 @@
             <nav class="nav-links">
                 <a href="#home">Ana Sayfa</a>
                 <a href="hikayemiz.html">Hikayemiz</a>
-                <a href="#menu">Lezzetlerimiz</a>
+                <a href="lezzetlerimiz.html">Lezzetlerimiz</a>
                 <a href="galeri.html">Galeri</a>
-                <a href="#contact">İletişim</a>
+                <a href="iletisim.html">İletişim</a>
             </nav>
             <button class="mobile-menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menüyü aç">
                 <i class="fas fa-bars"></i>
@@ -71,9 +42,9 @@
         </button>
         <a href="#home">Ana Sayfa</a>
         <a href="hikayemiz.html">Hikayemiz</a>
-        <a href="#menu">Lezzetlerimiz</a>
+        <a href="lezzetlerimiz.html">Lezzetlerimiz</a>
         <a href="galeri.html">Galeri</a>
-        <a href="#contact">İletişim</a>
+        <a href="iletisim.html">İletişim</a>
     </div>
 
     <!-- Hero Section -->
@@ -95,6 +66,8 @@
         <div class="smoke-layer smoke-1"></div>
         <div class="smoke-layer smoke-2"></div>
 
+        <!-- Piliç Çevirme Animasyonu -->
+        <canvas id="chickenCanvas" class="chicken-canvas"></canvas>
         <div class="container hero-content">
             <!-- Trust Badge -->
             <div class="hero-trust-badge hero-entrance delay-badge">
@@ -108,7 +81,7 @@
             <h1 class="hero-title hero-entrance delay-2">1950'den Beri<br><span class="hero-title-accent">Değişmeyen Lezzet</span></h1>
             <p class="hero-desc hero-entrance delay-3">Tarihi dokumuz ve taptaze malzemelerimizle hazırladığımız meşhur piliç çevirme lezzetiyle sizleri ağırlamaktan gurur duyuyoruz.</p>
             <div class="hero-buttons hero-entrance delay-4">
-                <a href="#menu" class="btn btn-primary">
+                <a href="lezzetlerimiz.html" class="btn btn-primary">
                     <span>Menüyü İncele</span>
                     <i class="fas fa-arrow-right btn-icon"></i>
                 </a>
@@ -308,7 +281,7 @@
                 <div class="social-links">
                     <a href="https://www.google.com/maps/search/?api=1&amp;query=Ataman+Lokantasi+Zonguldak" target="_blank" rel="noopener noreferrer" aria-label="Konumu Google Haritalar'da aç"><i class="fas fa-map-marker-alt"></i></a>
                     <a href="tel:+903722512491" aria-label="Ataman Lokantası'nı ara"><i class="fas fa-phone-alt"></i></a>
-                    <a href="#menu" aria-label="Lezzetlerimiz bölümüne git"><i class="fas fa-utensils"></i></a>
+                    <a href="lezzetlerimiz.html" aria-label="Lezzetlerimiz sayfasına git"><i class="fas fa-utensils"></i></a>
                 </div>
             </div>
             
@@ -317,14 +290,14 @@
                 <ul>
                     <li><a href="#home">Ana Sayfa</a></li>
                     <li><a href="hikayemiz.html">Hikayemiz</a></li>
-                    <li><a href="#menu">Lezzetlerimiz</a></li>
+                    <li><a href="lezzetlerimiz.html">Lezzetlerimiz</a></li>
                 </ul>
             </div>
             
             <div class="footer-links">
                 <h4>Destek</h4>
                 <ul>
-                    <li><a href="#contact">İletişim</a></li>
+                    <li><a href="iletisim.html">İletişim</a></li>
                     <li><a href="sss.html">S.S.S</a></li>
                     <li><a href="gizlilik-politikasi.html">Gizlilik Politikası</a></li>
                 </ul>
@@ -334,7 +307,7 @@
         <div class="footer-bottom">
             <div class="container">
                 <p>&copy; 2026 Ataman Lokantası. Tüm hakları saklıdır.</p>
-                <p>Zonguldak'ta uc kuşaktır süren lezzet geleneği.</p>
+                <p>Şık ve Modern Tasarım.</p>
             </div>
         </div>
     </footer>
